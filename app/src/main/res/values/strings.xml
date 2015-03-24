@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Login</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="but1">Press me</string>
+    <string name="mainMenu">Main menu</string>
+</resources>

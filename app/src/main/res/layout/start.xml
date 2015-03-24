@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@drawable/back">
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <azaza.login.Style.TextViewPlus
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPlus1"
+            foo:customFont="fonts/Skranji-Bold.ttf"
+            android:text="Hello, "
+            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
+
+
+        <azaza.login.Style.TextViewPlus
+            android:layout_width="wrap_content"
+            android:id="@+id/hello"
+            android:layout_weight="0.08"
+            android:layout_height="wrap_content"
+            foo:customFont="fonts/Skranji-Bold.ttf"
+            android:textSize="25dp"
+            android:layout_gravity="center_horizontal"
+            android:autoText="false"
+            android:textAlignment="center"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
+            />
+
+    </TableRow>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07"
+        android:background="@drawable/start_press"
+        android:onClick="onStart"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07"
+        android:background="@drawable/records_press"
+        android:onClick="onRecords"
+        android:layout_marginBottom="50dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07"
+        android:background="@drawable/exit_press"
+        android:onClick="onExit" />
+
+</LinearLayout>
