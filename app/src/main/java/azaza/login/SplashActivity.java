@@ -3,11 +3,8 @@ package azaza.login;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +28,7 @@ public class SplashActivity extends Activity {
 
 
     Connect connect = new Connect();
-    public Context mContext = SplashActivity.this;
+    //public Context mContext = SplashActivity.this;
     AccountManager mAccountManager;
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
@@ -56,10 +53,8 @@ public class SplashActivity extends Activity {
 
             }
         });
-      onSing();
-
+        onSing();
     }
-
 
 
     private void Test() {
