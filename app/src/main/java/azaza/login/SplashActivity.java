@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 
+
+import java.util.concurrent.Executors;
 
 import azaza.login.Internet.Connect;
 import azaza.login.database.mongo.service.ServiceContainer;
@@ -45,10 +48,19 @@ public class SplashActivity extends Activity {
         loadText = (TextView) findViewById(R.id.textView1);
         tokText = (TextView) findViewById(R.id.token);
 
-        //-Test();
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
 
-        onSing();
+            @Override
+            public void run() {
+                Test();
+
+            }
+        });
+      onSing();
+
     }
+
+
 
     private void Test() {
         EsAccount esAccount = new EsAccount();

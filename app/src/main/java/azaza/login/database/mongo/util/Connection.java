@@ -67,6 +67,7 @@ public class Connection extends AsyncTask<Void, Void, Void>{
         MongoClientURI uri = new MongoClientURI(mongoClientURI);
         MongoClient client = new MongoClient(uri);
         return client.getDB(uri.getDatabase());
+
     }
 
     public DB getDB() {
