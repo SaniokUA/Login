@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'org.mongodb:mongodb-driver:3.0.0-rc0'
+    compile 'com.github.nkzawa:socket.io-client:0.4.2'
 }

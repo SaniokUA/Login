@@ -4,16 +4,28 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.auth.GoogleAuthUtil;
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.github.nkzawa.socketio.client.IO;
 
 import azaza.login.Internet.Connect;
 import azaza.login.database.mongo.service.ServiceContainer;
@@ -26,7 +38,6 @@ public class SplashActivity extends Activity {
     ProgressBar loading;
     TextView loadText;
     TextView tokText;
-
 
     Connect connect = new Connect();
     AccountManager mAccountManager;
@@ -44,22 +55,26 @@ public class SplashActivity extends Activity {
         loading = (ProgressBar) findViewById(R.id.progressBar1);
         loadText = (TextView) findViewById(R.id.textView1);
         tokText = (TextView) findViewById(R.id.token);
-
         onSing();
 
-        Executors.newSingleThreadExecutor().submit(new Runnable() {
 
-            @Override
-            public void run() {
-                EsAccount esAccount = new EsAccount();
-                esAccount.setCountry("Test");
-                esAccount.setEmail("test@test.test");
-                esAccount.setLogin("test");
+        Executors.newSingleThreadExecutor().
 
-                AccountService accountService = ServiceContainer.getInstance().getService(AccountService.class);
-                accountService.createAccount(esAccount);
-            }
-        });
+                submit(new Runnable() {
+
+                           @Override
+                           public void run() {
+                               EsAccount esAccount = new EsAccount();
+                               esAccount.setCountry("Test");
+                               esAccount.setEmail("test@test.test");
+                               esAccount.setLogin("test");
+
+                               AccountService accountService = ServiceContainer.getInstance().getService(AccountService.class);
+                               accountService.createAccount(esAccount);
+                           }
+                       }
+
+                );
     }
 
 
@@ -113,5 +128,6 @@ public class SplashActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
