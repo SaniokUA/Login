@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,11 +34,7 @@ public class MainActivity extends StartActivity {
     Context context;
     Chronometer chronometer;
 
-    final String LOG_TAG = "myLogs";
-    Button btnAdd, btnRead, btnClear;
-
     DB db;
-    SimpleCursorAdapter scAdapter;
     public String result;
 
 
@@ -177,6 +172,7 @@ public class MainActivity extends StartActivity {
             ((TextView)findViewById(R.id.textView)).setText(""+ ++i);
         }
     };
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

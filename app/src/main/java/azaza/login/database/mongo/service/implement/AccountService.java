@@ -1,7 +1,5 @@
 package azaza.login.database.mongo.service.implement;
 
-import android.os.AsyncTask;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -21,7 +19,7 @@ public class AccountService extends BService {
         DBCollection songs = dataBase.getCollection("accounts");
         BasicDBObject findQuery = new BasicDBObject("EMAIL", esAccount.getEmail());
         DBCursor docs = songs.find(findQuery);
-        if (docs.hasNext()) {
+        if (!docs.hasNext()) {
             BasicDBObject basicDBObject = esAccount.coding();
             songs.insert(basicDBObject);
 

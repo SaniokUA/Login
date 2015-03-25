@@ -1,7 +1,5 @@
 package azaza.login.database.mongo.service.core;
 
-import android.os.AsyncTask;
-
 import com.mongodb.DB;
 
 import azaza.login.database.mongo.util.Connection;

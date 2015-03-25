@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthUtil;
 
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import azaza.login.Internet.Connect;
@@ -28,7 +29,6 @@ public class SplashActivity extends Activity {
 
 
     Connect connect = new Connect();
-    //public Context mContext = SplashActivity.this;
     AccountManager mAccountManager;
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
@@ -45,15 +45,21 @@ public class SplashActivity extends Activity {
         loadText = (TextView) findViewById(R.id.textView1);
         tokText = (TextView) findViewById(R.id.token);
 
+        onSing();
+
         Executors.newSingleThreadExecutor().submit(new Runnable() {
 
             @Override
             public void run() {
-                Test();
+                EsAccount esAccount = new EsAccount();
+                esAccount.setCountry("Test");
+                esAccount.setEmail("test@test.test");
+                esAccount.setLogin("test");
 
+                AccountService accountService = ServiceContainer.getInstance().getService(AccountService.class);
+                accountService.createAccount(esAccount);
             }
         });
-        onSing();
     }
 
 
