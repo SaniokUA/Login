@@ -12,7 +12,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import azaza.login.AbstractGetNameTask;
+import azaza.login.AuthGoogle.Authorization.AbstractGetNameTask;
+import azaza.login.AuthGoogle.Authorization.GoogleData.User;
 import azaza.login.R;
 
 
@@ -21,13 +22,19 @@ public class StartActivity extends ActionBarActivity {
     AlertDialog.Builder ad;
     Context context;
     TextView hello;
+    TextView debug;
+    User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start);
         hello = (TextView) findViewById(R.id.hello);
+        debug = (TextView) findViewById(R.id.textDebug);
+
+
         getName();
+
     }
 
     //Button Start
@@ -36,7 +43,7 @@ public class StartActivity extends ActionBarActivity {
     }
 
     //Dialog window
-    public void startDialog(){
+    public void startDialog() {
         context = StartActivity.this;
         String title = "Начало игры";
         String message = "Установите рекорд по нажатию кнопки за 10 секунд";
@@ -69,7 +76,7 @@ public class StartActivity extends ActionBarActivity {
     }
 
     //View all Results
-    public void onRecords(View view){
+    public void onRecords(View view) {
         finish();
         Intent intent = new Intent(StartActivity.this, Records.class);
         startActivity(intent);
@@ -81,16 +88,16 @@ public class StartActivity extends ActionBarActivity {
                     AbstractGetNameTask.GOOGLE_USER_DATA);
 
             if (profileData.has("name")) {
-                String textName = profileData.getString("name");
+                String textName = profileData.getString("given_name");
                 hello.setText(textName);
             }
-        }
-        catch (JSONException e) {
+            debug.setText(user.getLastName());
+
+
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
-           }
     }
+}
 

@@ -1,34 +1,31 @@
 package azaza.login.database.mongo.service.implement;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import azaza.login.database.mongo.service.core.BService;
+import azaza.login.database.mongo.service.core.AServiceClass;
 import azaza.login.database.mongo.service.essence.EsAccount;
 import azaza.login.database.mongo.service.essence.EsResult;
 
 /**
  * Created by Alex on 23.03.2015.
  */
-public class ResultService extends BService {
+@AServiceClass(name = "ResultService")
+public class ResultService {
 
     public boolean createResult(EsResult esResult) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("results");
 
         BasicDBObject basicDBObject = esResult.coding();
         songs.insert(basicDBObject);
+        */
 
         return true;
     }
 
     public boolean findResult(EsResult esResult) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("results");
         BasicDBObject findQuery = new BasicDBObject("RESULTID", esResult.getResultId());
@@ -39,10 +36,12 @@ public class ResultService extends BService {
 
             return true;
         }
+        */
         return false;
     }
 
     public List<EsResult> findAllResultsForUser(EsAccount esAccount) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("results");
         BasicDBObject findQuery = new BasicDBObject("USERID", esAccount.getUserId());
@@ -59,10 +58,13 @@ public class ResultService extends BService {
             esResults.add(esResult);
 
         }
-        return esResults;
+
+        return esResults;*/
+        return null;
     }
 
     public boolean removeResult(EsResult esResult) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("results");
         BasicDBObject findQuery = new BasicDBObject("RESULTID", esResult.getResultId());
@@ -72,7 +74,7 @@ public class ResultService extends BService {
             songs.remove(doc);
 
             return true;
-        }
+        }*/
         return false;
     }
 }

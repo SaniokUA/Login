@@ -1,4 +1,4 @@
-package azaza.login;
+package azaza.login.AuthGoogle.Authorization;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,35 +7,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
+import azaza.login.SplashActivity;
 import azaza.login.game.StartActivity;
 
 /**
  * Display personalized greeting. This class contains boilerplate code to
  * consume the token but isn't integral to getting the tokens.
- *
  */
-
 
 
 public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "TokenInfoTask";
     protected SplashActivity mActivity;
-    public static String GOOGLE_USER_DATA="No_data";
-    public static String GOOGLE_TOKEN="No_data";
+    public static String GOOGLE_USER_DATA = "No_data";
+    public static String GOOGLE_TOKEN = "No_data";
     protected String mScope;
     protected String mEmail;
     protected int mRequestCode;
-
 
 
     AbstractGetNameTask(SplashActivity activity, String email, String scope) {
@@ -48,6 +43,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         try {
             fetchNameFromProfileServer();
+            getUserDetails();
 
         } catch (IOException ex) {
             onError("Following Error occured, please try again. "
@@ -57,6 +53,8 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
+
+    protected abstract void getUserDetails() throws JSONException;
 
     protected void onError(String msg, Exception e) {
         if (e != null) {
@@ -68,24 +66,21 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
      * Get a authentication token if one is not available. If the error is not
      * recoverable then it displays the error message on parent activity.
      */
-    protected abstract String fetchToken() throws IOException;
+    public abstract String fetchToken() throws IOException;
 
-      /**
+    /**
      * Contacts the user info server to get the profile of the user and extracts
      * the first name of the user from the profile. In order to authenticate
      * with the user info server the method first fetches an access token from
      * Google Play services.
-     * @return
-     * @return
      *
-     * @throws IOException
-     *             if communication with user info server failed.
-     * @throws JSONException
-     *             if the response from the server could not be parsed.
+     * @return
+     * @throws IOException   if communication with user info server failed.
+     * @throws JSONException if the response from the server could not be parsed.
      */
     private void fetchNameFromProfileServer() throws IOException, JSONException {
         String token = fetchToken();
-        URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token="+ token);
+        URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         int sc = con.getResponseCode();
         if (sc == 200) {
@@ -94,7 +89,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
             GOOGLE_TOKEN = token;
             is.close();
 
-            Intent intent=new Intent(mActivity,StartActivity.class);
+            Intent intent = new Intent(mActivity, StartActivity.class);
             intent.putExtra("email_id", mEmail);
             mActivity.startActivity(intent);
             mActivity.finish();
@@ -111,6 +106,8 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
             return;
         }
     }
+
+
     /**
      * Reads the response from the input stream and returns it as a string.
      */
@@ -123,8 +120,6 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
         }
         return new String(bos.toByteArray(), "UTF-8");
     }
-
-
 
 
 }

@@ -4,33 +4,18 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.auth.GoogleAuthUtil;
 
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-
-import java.net.URISyntaxException;
-import java.net.UnknownHostException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import com.github.nkzawa.socketio.client.IO;
-
+import azaza.login.AuthGoogle.Authorization.AbstractGetNameTask;
+import azaza.login.AuthGoogle.Authorization.GetNameInForeground;
+import azaza.login.AuthGoogle.Authorization.GoogleData.GoogleData;
 import azaza.login.Internet.Connect;
-import azaza.login.database.mongo.service.ServiceContainer;
-import azaza.login.database.mongo.service.essence.EsAccount;
-import azaza.login.database.mongo.service.implement.AccountService;
 
 
 public class SplashActivity extends Activity {
@@ -41,7 +26,6 @@ public class SplashActivity extends Activity {
 
     Connect connect = new Connect();
     AccountManager mAccountManager;
-    private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
     /**
      * Called when the activity is first created.
@@ -56,37 +40,8 @@ public class SplashActivity extends Activity {
         loadText = (TextView) findViewById(R.id.textView1);
         tokText = (TextView) findViewById(R.id.token);
         onSing();
-
-
-        Executors.newSingleThreadExecutor().
-
-                submit(new Runnable() {
-
-                           @Override
-                           public void run() {
-                               EsAccount esAccount = new EsAccount();
-                               esAccount.setCountry("Test");
-                               esAccount.setEmail("test@test.test");
-                               esAccount.setLogin("test");
-
-                               AccountService accountService = ServiceContainer.getInstance().getService(AccountService.class);
-                               accountService.createAccount(esAccount);
-                           }
-                       }
-
-                );
     }
 
-
-    private void Test() {
-        EsAccount esAccount = new EsAccount();
-        esAccount.setCountry("Test");
-        esAccount.setEmail("test@test.test");
-        esAccount.setLogin("test");
-
-        AccountService accountService = ServiceContainer.getInstance().getService(AccountService.class);
-        accountService.createAccount(esAccount);
-    }
 
     //authGoogle
     public void onSing() {
@@ -118,7 +73,7 @@ public class SplashActivity extends Activity {
             String[] accountarrs = getAccountNames();
             if (accountarrs.length > 0) {
                 //you can set here account for login
-                getTask(SplashActivity.this, accountarrs[0], SCOPE).execute();
+                getTask(SplashActivity.this, accountarrs[0], GoogleData.SCOPE).execute();
             } else {
                 Toast.makeText(SplashActivity.this, "No Google Account Sync!",
                         Toast.LENGTH_SHORT).show();

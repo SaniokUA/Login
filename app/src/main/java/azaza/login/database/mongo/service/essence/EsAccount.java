@@ -3,9 +3,11 @@ package azaza.login.database.mongo.service.essence;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
-import azaza.login.database.mongo.service.ServiceContainer;
 import azaza.login.database.mongo.service.essence.core.BMongoEssence;
 import azaza.login.database.mongo.service.implement.ResultService;
 
@@ -19,6 +21,7 @@ public class EsAccount extends BMongoEssence {
     private String login;
     private String country;
     private EsResult bestResult;
+    private boolean success;
 
     // <editor-fold defaultstate="collapsed" desc="Getter / Setter">
     public UUID getUserId() {
@@ -69,27 +72,30 @@ public class EsAccount extends BMongoEssence {
 
     // <editor-fold defaultstate="collapsed" desc="Coding / Decoding">
     @Override
-    public BasicDBObject coding() {
-        BasicDBObject account = new BasicDBObject();
-        account.put("USERID", userId.toString());
-        account.put("EMAIL", email);
-        account.put("LOGIN", login);
-        account.put("COUNTRY", country);
-        account.put("BESTRESULT", bestResult.getResultId());
+    protected JSONObject toJson() {
+        JSONObject json = new JSONObject();
 
-        return account;
+        try {
+            //json.put("USERID", userId.toString());
+            json.put("EMAIL", email);
+            json.put("LOGIN", login);
+            json.put("COUNTRY", country);
+            json.put("BESTRESULT", bestResult.getResultId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 
     @Override
-    public void decoding(DBObject doc) {
-        userId = UUID.fromString((String) doc.get("USERID"));
-        email = (String) doc.get("EMAIL");
-        login = (String) doc.get("LOGIN");
-        country = (String) doc.get("COUNTRY");
-        bestResult = new EsResult(userId);
-        bestResult.setResultId(UUID.fromString((String) doc.get("BESTRESULT")));
-        ResultService resultService = ServiceContainer.getInstance().getService(ResultService.class);
-        resultService.findResult(bestResult);
+    protected void parse(JSONObject json) {
+        try {
+            userId = UUID.fromString((String) json.get("USERID"));
+            success = (boolean) json.get("SUCCESS");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     // </editor-fold>
 }

@@ -4,21 +4,24 @@ package azaza.login.database.mongo.util;
  * Created by Alex on 23.03.2015.
  */
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import java.net.URISyntaxException;
+
 
 public class Connection {
-    private final String mongoClientURI = "mongodb://android:android@ds061747.mongolab.com:61747/android";
+    private final String socketURI = "http://192.168.10.22:3001";
     private static volatile Connection instance;
-    private DB dataBase;
+    private Socket socket;
 
     private Connection() {
-        dataBase = ConnectionToDataBase();
     }
 
-    public static Connection getConnection() {
+    public static Connection getInstance() {
         Connection localConnection = instance;
         if (localConnection == null) {
             synchronized (Connection.class) {
@@ -31,15 +34,19 @@ public class Connection {
         return instance;
     }
 
-    private DB ConnectionToDataBase() {
-        MongoClientURI uri = new MongoClientURI(mongoClientURI);
-        MongoClient client = new MongoClient(uri);
-        return client.getDB(uri.getDatabase());
+    private Socket ConnectionToSocket() throws URISyntaxException {
+        return IO.socket("http://192.168.10.22:3001");
     }
 
-    public DB getDB() {
-        if (dataBase != null)
-            dataBase = ConnectionToDataBase();
-        return dataBase;
+    public Socket getSocket() {
+        if (socket != null) {
+            try {
+                socket = ConnectionToSocket();
+                socket.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return socket;
     }
 }

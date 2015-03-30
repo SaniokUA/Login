@@ -1,20 +1,19 @@
 package azaza.login.database.mongo.service.implement;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-
-import azaza.login.database.mongo.service.core.BService;
+import azaza.login.database.mongo.service.core.AServiceClass;
+import azaza.login.database.mongo.service.core.AServiceMethod;
+import azaza.login.database.mongo.service.core.BServic;
 import azaza.login.database.mongo.service.essence.EsAccount;
 
 /**
  * Created by Alex on 23.03.2015.
  */
-public class AccountService extends BService {
+@AServiceClass(name = "AccountService")
+public class AccountService extends BServic {
 
+    @AServiceMethod(name = "createAccount")
     public boolean createAccount(EsAccount esAccount) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("accounts");
         BasicDBObject findQuery = new BasicDBObject("EMAIL", esAccount.getEmail());
@@ -24,11 +23,14 @@ public class AccountService extends BService {
             songs.insert(basicDBObject);
 
             return true;
-        }
+        }*/
         return false;
     }
 
+    @AServiceMethod(name = "verifyAccount")
     public boolean verifyAccount(EsAccount esAccount) {
+        int i = 0;
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("accounts");
         BasicDBObject findQuery = new BasicDBObject("USERID", esAccount.getUserId());
@@ -39,10 +41,13 @@ public class AccountService extends BService {
 
             return true;
         }
+        */
         return false;
     }
 
+    @AServiceMethod(name = "removeAccount")
     public boolean removeAccount(EsAccount esAccount) {
+        /*
         DB dataBase = this.getDataBase();
         DBCollection songs = dataBase.getCollection("accounts");
         BasicDBObject findQuery = new BasicDBObject("USERID", esAccount.getUserId());
@@ -53,6 +58,7 @@ public class AccountService extends BService {
 
             return true;
         }
+        */
         return false;
     }
 }

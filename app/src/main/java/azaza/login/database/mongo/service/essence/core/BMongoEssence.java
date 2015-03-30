@@ -3,18 +3,23 @@ package azaza.login.database.mongo.service.essence.core;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import org.json.JSONObject;
+
 /**
  * Created by Alex on 23.03.2015.
  */
 public abstract class BMongoEssence {
 
-    public abstract BasicDBObject coding();
+    protected abstract JSONObject toJson();
 
-    public abstract void decoding(DBObject doc);
+    protected abstract void parse(JSONObject json);
 
-    public void decoding(Object object){
-        DBObject doc=(DBObject)object;
-        decoding(doc);
+    public JSONObject coding() {
+        return toJson();
+    }
+
+    public void decoding(JSONObject json) {
+        decoding(json);
     }
 
 }
