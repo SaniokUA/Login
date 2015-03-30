@@ -30,7 +30,6 @@ public class StartActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start);
         hello = (TextView) findViewById(R.id.hello);
-        debug = (TextView) findViewById(R.id.textDebug);
 
 
         getName();
@@ -91,7 +90,6 @@ public class StartActivity extends ActionBarActivity {
                 String textName = profileData.getString("given_name");
                 hello.setText(textName);
             }
-            debug.setText(user.getLastName());
 
 
         } catch (JSONException e) {

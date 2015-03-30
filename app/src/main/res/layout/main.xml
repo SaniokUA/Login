@@ -21,23 +21,6 @@
 
     </TableRow>
 
-    <azaza.login.Style.TextViewPlus
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="0"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:textSize="120dp"
-        foo:customFont="fonts/Skranji-Bold.ttf"
-        android:textColor="@color/light_font"
-        android:shadowColor="@color/text_shadow"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2" />
-
 
     <Chronometer
         android:layout_width="wrap_content"
@@ -53,6 +36,31 @@
         android:layout_below="@+id/tableRow"
         android:layout_toRightOf="@+id/textView3"
         android:layout_toEndOf="@+id/textView3" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/speedometr"
+        android:background="@drawable/speedtest"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button" />
+
+    <azaza.login.Style.TextViewPlus
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/textView"
+        android:textSize="40dp"
+        foo:customFont="fonts/Skranji-Bold.ttf"
+        android:textColor="@color/light_font"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:layout_alignBottom="@+id/speedometr"
+        android:layout_centerHorizontal="true" />
 
     <azaza.login.Style.TextViewPlus
         android:layout_width="wrap_content"
@@ -75,8 +83,20 @@
         android:layout_height="200dp"
         android:id="@+id/button"
         android:background="@drawable/button_press"
-        android:layout_below="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+
+        android:layout_width="11dp"
+        android:layout_height="90dp"
+        android:id="@+id/arrow"
+        android:background="@drawable/arrow"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_alignTop="@+id/speedometr"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:baselineAlignBottom="false"
+        android:nestedScrollingEnabled="true" />
 
 </RelativeLayout>

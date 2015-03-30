@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import azaza.login.AuthGoogle.Authorization.GoogleData.GoogleData;
 import azaza.login.AuthGoogle.Authorization.GoogleData.User;
-import azaza.login.SplashActivity;
+import azaza.login.LoadingActivity;
 
 /**
  * This example shows how to fetch tokens if you are creating a foreground task/activity and handle
@@ -20,7 +20,7 @@ import azaza.login.SplashActivity;
  */
 public class GetNameInForeground extends AbstractGetNameTask {
 
-    public GetNameInForeground(SplashActivity activity, String email, String scope) {
+    public GetNameInForeground(LoadingActivity activity, String email, String scope) {
         super(activity, email, scope);
     }
 

@@ -14,7 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import azaza.login.SplashActivity;
+import azaza.login.LoadingActivity;
 import azaza.login.game.StartActivity;
 
 /**
@@ -25,7 +25,7 @@ import azaza.login.game.StartActivity;
 
 public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "TokenInfoTask";
-    protected SplashActivity mActivity;
+    protected LoadingActivity mActivity;
     public static String GOOGLE_USER_DATA = "No_data";
     public static String GOOGLE_TOKEN = "No_data";
     protected String mScope;
@@ -33,7 +33,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
     protected int mRequestCode;
 
 
-    AbstractGetNameTask(SplashActivity activity, String email, String scope) {
+    AbstractGetNameTask(LoadingActivity activity, String email, String scope) {
         this.mActivity = activity;
         this.mScope = scope;
         this.mEmail = email;

@@ -18,7 +18,7 @@ import azaza.login.AuthGoogle.Authorization.GoogleData.GoogleData;
 import azaza.login.Internet.Connect;
 
 
-public class SplashActivity extends Activity {
+public class LoadingActivity extends Activity {
 
     ProgressBar loading;
     TextView loadText;
@@ -47,14 +47,12 @@ public class SplashActivity extends Activity {
     public void onSing() {
         loading.setVisibility(View.VISIBLE);
         loadText.setVisibility(View.VISIBLE);
-
         syncGoogleAccount();
     }
 
     private String[] getAccountNames() {
         mAccountManager = AccountManager.get(this);
-        Account[] accounts = mAccountManager
-                .getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+        Account[] accounts = mAccountManager.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
         String[] names = new String[accounts.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = accounts[i].name;
@@ -62,7 +60,7 @@ public class SplashActivity extends Activity {
         return names;
     }
 
-    private AbstractGetNameTask getTask(SplashActivity activity, String email,
+    private AbstractGetNameTask getTask(LoadingActivity activity, String email,
                                         String scope) {
         return new GetNameInForeground(activity, email, scope);
 
@@ -73,13 +71,13 @@ public class SplashActivity extends Activity {
             String[] accountarrs = getAccountNames();
             if (accountarrs.length > 0) {
                 //you can set here account for login
-                getTask(SplashActivity.this, accountarrs[0], GoogleData.SCOPE).execute();
+                getTask(LoadingActivity.this, accountarrs[0], GoogleData.SCOPE).execute();
             } else {
-                Toast.makeText(SplashActivity.this, "No Google Account Sync!",
+                Toast.makeText(LoadingActivity.this, "No Google Account Sync!",
                         Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(SplashActivity.this, "No Network Service!",
+            Toast.makeText(LoadingActivity.this, "No Network Service!",
                     Toast.LENGTH_SHORT).show();
         }
     }

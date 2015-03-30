@@ -10,8 +10,12 @@ import android.os.SystemClock;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,7 @@ public class MainActivity extends StartActivity {
     AlertDialog.Builder ad;
     Context context;
     Chronometer chronometer;
+    ImageView Arrow;
 
     DB db;
     public String result;
@@ -41,9 +46,13 @@ public class MainActivity extends StartActivity {
         textView = (TextView) findViewById(R.id.textView);
 
         button = (ImageButton) findViewById(R.id.button);
+
+        Arrow = (ImageView) findViewById(R.id.arrow);
+
         button.setOnClickListener(listener);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         chronometer.start();
+
         chron();
 
 
@@ -123,6 +132,11 @@ public class MainActivity extends StartActivity {
         @Override
         public void onClick(View v) {
             ((TextView) findViewById(R.id.textView)).setText("" + ++i);
+            RotateAnimation rAnim = new RotateAnimation(i, i, 0, 180);
+
+            rAnim.setInterpolator(new LinearInterpolator());
+            rAnim.setDuration(1000L);
+            Arrow.startAnimation(rAnim);
         }
     };
 
