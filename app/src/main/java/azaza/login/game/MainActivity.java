@@ -28,6 +28,7 @@ public class MainActivity extends StartActivity {
     TextView textView;
     ImageButton button;
     private int i;
+    private double k = 0;
     TextView TextResult;
     AlertDialog.Builder ad;
     Context context;
@@ -54,6 +55,7 @@ public class MainActivity extends StartActivity {
         chronometer.start();
 
         chron();
+        rotate(-170);
 
 
     }
@@ -132,13 +134,22 @@ public class MainActivity extends StartActivity {
         @Override
         public void onClick(View v) {
             ((TextView) findViewById(R.id.textView)).setText("" + ++i);
-            RotateAnimation rAnim = new RotateAnimation(i, i, 0, 180);
-
-            rAnim.setInterpolator(new LinearInterpolator());
-            rAnim.setDuration(1000L);
-            Arrow.startAnimation(rAnim);
+            k = k + 3;
+            rotate((float) (-170 + k));
         }
     };
+
+
+    private void rotate(float degree) {
+        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree + 5,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                RotateAnimation.RELATIVE_TO_SELF, 0.94f);
+
+        rotateAnim.setDuration(0);
+        rotateAnim.setFillAfter(true);
+        Arrow.startAnimation(rotateAnim);
+    }
+
 
 
     @Override
