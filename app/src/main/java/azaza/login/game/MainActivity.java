@@ -27,13 +27,15 @@ public class MainActivity extends StartActivity {
 
     TextView textView;
     ImageButton button;
-    private int i;
+    private int i = 0;
     private double k = 0;
     TextView TextResult;
+    TextView PressToStart;
     AlertDialog.Builder ad;
     Context context;
     Chronometer chronometer;
     ImageView Arrow;
+    ImageView smallArow;
 
     DB db;
     public String result;
@@ -45,18 +47,19 @@ public class MainActivity extends StartActivity {
         setContentView(R.layout.main);
         TextResult = (TextView) findViewById(R.id.textView);
         textView = (TextView) findViewById(R.id.textView);
+        PressToStart = (TextView) findViewById(R.id.PressToStart);
 
         button = (ImageButton) findViewById(R.id.button);
 
         Arrow = (ImageView) findViewById(R.id.arrow);
+        smallArow = (ImageView) findViewById(R.id.smallarrow);
 
         button.setOnClickListener(listener);
+
+        PressToStart.setVisibility(View.INVISIBLE);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         chronometer.start();
-
         chron();
-        rotate(-170);
-
 
     }
 
@@ -134,20 +137,31 @@ public class MainActivity extends StartActivity {
         @Override
         public void onClick(View v) {
             ((TextView) findViewById(R.id.textView)).setText("" + ++i);
+            if (i == 1) {
+
+            }
             k = k + 3;
-            rotate((float) (-170 + k));
+            maineRotate((float) (-170 + k));
         }
     };
 
 
-    private void rotate(float degree) {
+    private void maineRotate(float degree) {
         final RotateAnimation rotateAnim = new RotateAnimation(degree, degree + 5,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.94f);
-
         rotateAnim.setDuration(0);
         rotateAnim.setFillAfter(true);
         Arrow.startAnimation(rotateAnim);
+    }
+
+    private void smalleRotate(float degree) {
+        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree + 3,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                RotateAnimation.RELATIVE_TO_SELF, 0.94f);
+        rotateAnim.setDuration(0);
+        rotateAnim.setFillAfter(true);
+        smallArow.startAnimation(rotateAnim);
     }
 
 

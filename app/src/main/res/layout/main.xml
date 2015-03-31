@@ -38,12 +38,13 @@
         android:layout_toEndOf="@+id/textView3" />
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="350dp"
+        android:layout_height="220dp"
         android:id="@+id/speedometr"
-        android:background="@drawable/speedtest"
-        android:layout_below="@+id/chronometer"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/speedometr"
+        android:layout_above="@+id/button"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false" />
 
     <azaza.login.Style.TextViewPlus
         android:layout_width="wrap_content"
@@ -58,8 +59,11 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="86dp"
+        android:layout_above="@+id/button"
+        android:layout_alignLeft="@+id/speedometr"
+        android:layout_alignBottom="@+id/speedometr" />
 
     <azaza.login.Style.TextViewPlus
         android:layout_width="wrap_content"
@@ -88,14 +92,45 @@
     <ImageView
 
         android:layout_width="11dp"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:id="@+id/arrow"
         android:background="@drawable/arrow"
-        android:layout_marginTop="13dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_alignTop="@+id/speedometr"
-        android:layout_centerHorizontal="true"
         android:baselineAlignBottom="false"
-        android:nestedScrollingEnabled="true" />
+        android:nestedScrollingEnabled="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/speedometr"
+        android:layout_alignTop="@+id/speedometr"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="12dp" />
+
+    <ImageView
+        android:layout_width="7dp"
+        android:layout_height="70dp"
+        android:id="@+id/smallarrow"
+        android:background="@drawable/arrow"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignRight="@+id/speedometr"
+        android:layout_alignEnd="@+id/button"
+        android:layout_alignBottom="@+id/speedometr"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="80dp" />
+
+    <azaza.login.Style.TextViewPlus
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Tap Button to START "
+        android:id="@+id/PressToStart"
+        android:textSize="30dp"
+        foo:customFont="fonts/Skranji-Bold.ttf"
+        android:textColor="@color/light_font"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:layout_below="@+id/speedometr"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
