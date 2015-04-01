@@ -7,20 +7,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
+
 import android.view.animation.RotateAnimation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import azaza.login.DB;
 import azaza.login.R;
+
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static java.lang.Thread.sleep;
 
 
 public class MainActivity extends StartActivity {
@@ -29,6 +35,11 @@ public class MainActivity extends StartActivity {
     ImageButton button;
     private int i = 0;
     private double k = 0;
+    int count = 0;
+    int sum = 0;
+    int bestRes = 0;
+    double step = 0;
+    int[] bestSpeed;
     TextView TextResult;
     TextView PressToStart;
     AlertDialog.Builder ad;
@@ -36,9 +47,12 @@ public class MainActivity extends StartActivity {
     Chronometer chronometer;
     ImageView Arrow;
     ImageView smallArow;
+    final String LOG_TAG = "myLogs";
 
     DB db;
     public String result;
+
+    Timer timer = new Timer();
 
 
     @Override
@@ -60,6 +74,12 @@ public class MainActivity extends StartActivity {
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         chronometer.start();
         chron();
+
+        smalleRotate(-38);
+        maineRotate(-170);
+
+        onSeconds();
+
 
     }
 
@@ -100,7 +120,6 @@ public class MainActivity extends StartActivity {
     }
 
 
-
     //Result dialog
     public void resultDialog() {
         context = MainActivity.this;
@@ -134,14 +153,15 @@ public class MainActivity extends StartActivity {
 
     //Press button
     OnClickListener listener = new OnClickListener() {
+
         @Override
         public void onClick(View v) {
             ((TextView) findViewById(R.id.textView)).setText("" + ++i);
-            if (i == 1) {
-
-            }
+            count++;
             k = k + 3;
             maineRotate((float) (-170 + k));
+            step = step + 30;
+            smalleRotate((float) (-38 + step));
         }
     };
 
@@ -156,32 +176,63 @@ public class MainActivity extends StartActivity {
     }
 
     private void smalleRotate(float degree) {
-        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree + 3,
+        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.94f);
-        rotateAnim.setDuration(0);
+        rotateAnim.setDuration(1000L);
         rotateAnim.setFillAfter(true);
         smallArow.startAnimation(rotateAnim);
     }
 
+    public void onSeconds() {
+        timer.schedule(new Task(), 1000);
+    }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
 
+    private class Task extends TimerTask {
+        @Override
+        public void run() {
+            for (int sec = 0; sec <= 10; sec++) {
+                //bestSpeed[sec]=count;
+                sum = sum + count;
+                Log.d(LOG_TAG, String.valueOf(count));
+                count = 0;
+                step = 0;
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (sec == 10) {
+                    Log.d(LOG_TAG, String.valueOf(sum));
+                }
+            }
+
+        }
+    }
+
+
+    public int bestSpeed(int array[]) {
+        int lengh = bestSpeed.length;
+        for (int s = 0; s <= lengh; s++) {
+            bestRes = bestSpeed[0];
+            if (bestSpeed[s] > bestRes) {
+                bestRes = bestSpeed[s];
+            }
+        }
+        return bestRes;
+    }
 }
 
 
