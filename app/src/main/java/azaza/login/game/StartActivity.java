@@ -9,12 +9,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import azaza.login.AuthGoogle.Authorization.AbstractGetNameTask;
-import azaza.login.AuthGoogle.Authorization.GoogleData.User;
+import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.R;
+import azaza.login.Settings.LoadSettings;
 
 
 public class StartActivity extends ActionBarActivity {
@@ -22,16 +19,14 @@ public class StartActivity extends ActionBarActivity {
     AlertDialog.Builder ad;
     Context context;
     TextView hello;
-    TextView debug;
-    User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start);
+        LoadSettings.getInstance(this);
+
         hello = (TextView) findViewById(R.id.hello);
-
-
         getName();
 
     }
@@ -82,20 +77,10 @@ public class StartActivity extends ActionBarActivity {
     }
 
     public void getName() {
-        try {
-            JSONObject profileData = new JSONObject(
-                    AbstractGetNameTask.GOOGLE_USER_DATA);
 
-            if (profileData.has("name")) {
-                String textName = profileData.getString("given_name");
-                hello.setText(textName);
-            }
-
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        hello.setText(UserData.firstName);
     }
+
+
 }
 

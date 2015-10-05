@@ -1,21 +1,22 @@
 package azaza.login;
 
-import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
 
-
-import azaza.login.AuthGoogle.Authorization.AbstractGetNameTask;
-import azaza.login.AuthGoogle.Authorization.GetNameInForeground;
-import azaza.login.AuthGoogle.Authorization.GoogleData.GoogleData;
-import azaza.login.Internet.Connect;
+import azaza.login.AuthGoogle.Authorization.GoogleData.GoogleAuth;
+import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
+import azaza.login.Settings.EditSettings;
+import azaza.login.Settings.LoadSettings;
 
 
 public class LoadingActivity extends Activity {
@@ -23,9 +24,12 @@ public class LoadingActivity extends Activity {
     ProgressBar loading;
     TextView loadText;
     TextView tokText;
+    static SharedPreferences settings;
 
-    Connect connect = new Connect();
-    AccountManager mAccountManager;
+    public static final int REQUEST_ACCOUNT_PICKER = 1000;
+
+    GoogleAuth googleAuth;
+
 
     /**
      * Called when the activity is first created.
@@ -35,10 +39,15 @@ public class LoadingActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Splash screen view
 
-        setContentView(R.layout.activity_splash);
-        loading = (ProgressBar) findViewById(R.id.progressBar1);
-        loadText = (TextView) findViewById(R.id.textView1);
+        setContentView(R.layout.activity_loading);
+        loading = (ProgressBar) findViewById(R.id.loadingBar);
+        loadText = (TextView) findViewById(R.id.loadingText);
         tokText = (TextView) findViewById(R.id.token);
+        googleAuth = new GoogleAuth(this);
+
+        settings = getSharedPreferences("PressButton", Context.MODE_PRIVATE);
+        LoadSettings.getInstance(this);
+
         onSing();
     }
 
@@ -47,40 +56,35 @@ public class LoadingActivity extends Activity {
     public void onSing() {
         loading.setVisibility(View.VISIBLE);
         loadText.setVisibility(View.VISIBLE);
-        syncGoogleAccount();
-    }
 
-    private String[] getAccountNames() {
-        mAccountManager = AccountManager.get(this);
-        Account[] accounts = mAccountManager.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-        String[] names = new String[accounts.length];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = accounts[i].name;
+        if (UserData.email == null) {
+            showGoogleAccountPicker();
+        }else{
+
+            googleAuth.signInWithGplus(UserData.email);
+
         }
-        return names;
     }
 
-    private AbstractGetNameTask getTask(LoadingActivity activity, String email,
-                                        String scope) {
-        return new GetNameInForeground(activity, email, scope);
-
+    private void showGoogleAccountPicker() {
+        Intent googlePicker = AccountPicker.newChooseAccountIntent(null, null,
+                new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
+        startActivityForResult(googlePicker, REQUEST_ACCOUNT_PICKER);
     }
 
-    public void syncGoogleAccount() {
-        if (connect.isNetworkAvailable(this)) {
-            String[] accountarrs = getAccountNames();
-            if (accountarrs.length > 0) {
-                //you can set here account for login
-                getTask(LoadingActivity.this, accountarrs[0], GoogleData.SCOPE).execute();
-            } else {
-                Toast.makeText(LoadingActivity.this, "No Google Account Sync!",
-                        Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        if (requestCode == REQUEST_ACCOUNT_PICKER && resultCode == RESULT_OK) {
+            String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            EditSettings.saveUserName(settings, accountName);
+
+            if (accountName != null) {
+                googleAuth.signInWithGplus(accountName);
             }
+
         } else {
-            Toast.makeText(LoadingActivity.this, "No Network Service!",
-                    Toast.LENGTH_SHORT).show();
+
         }
     }
-
 
 }

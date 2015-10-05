@@ -1,13 +1,13 @@
 package azaza.login.AuthGoogle.Authorization.GoogleData;
 
 
-public class User {
+public class UserData {
 
     public static String userID;
     public static String userName;
     public static String firstName;
     public static String lastName;
-    public static String emailId;
+    public static String email;
     public static String Sex;
     public static String SocketId;
 
@@ -43,12 +43,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSex() {
