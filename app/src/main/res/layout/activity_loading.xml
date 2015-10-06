@@ -8,6 +8,7 @@
     android:layout_gravity="center">
 
     <LinearLayout
+        android:id="@+id/layoutLoading"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
@@ -39,6 +40,25 @@
             android:max="100"
             android:progress="1"
             android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutRecon"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reconnect"
+            android:id="@+id/reconnectButton"
+            android:onClick="onReconnect"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

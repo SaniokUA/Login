@@ -7,7 +7,23 @@ import android.net.NetworkInfo;
 /**
  * Created by Alex on 20.03.2015.
  */
-public class Connect {
+public class Network {
+
+    private static  Network instance = null;
+    Context context;
+
+
+    public Network(){
+
+    }
+
+    public Network getInstance( ){
+        if (instance == null) {
+            instance = new Network();
+        }
+        return instance;
+    }
+
 
     public boolean isNetworkAvailable(final Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

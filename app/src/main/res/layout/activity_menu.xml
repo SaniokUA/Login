@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewPlus1"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:text="Hello, "
+                android:textSize="25sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_weight="0" />
+
+            <azaza.login.Style.TextViewPlus
+                    android:layout_width="wrap_content"
+                    android:id="@+id/hello"
+                android:layout_height="wrap_content"
+                    foo:customFont="fonts/Skranji-Bold.ttf"
+                    android:textSize="25sp"
+                    android:layout_gravity="center_horizontal"
+                    android:autoText="false"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_font"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_gravity="right">
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewWorldRank"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:text="Rank: "
+                android:textSize="25sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:id="@+id/textViewWorldRankValue"
+                android:layout_height="wrap_content"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:textSize="25sp"
+                android:text="12"
+                android:layout_gravity="center_horizontal"
+                android:autoText="false"
+                android:textAlignment="center"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_marginRight="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <azaza.login.Style.TextViewPlus
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewBestScore"
+            foo:customFont="fonts/Skranji-Bold.ttf"
+            android:text="Best score: "
+            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
+
+        <azaza.login.Style.TextViewPlus
+            android:layout_width="wrap_content"
+            android:id="@+id/textViewBestScoreValue"
+            android:layout_height="wrap_content"
+            foo:customFont="fonts/Skranji-Bold.ttf"
+            android:textSize="25dp"
+            android:text="100"
+            android:layout_gravity="center_horizontal"
+            android:autoText="false"
+            android:textAlignment="center"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="40dp">
+
+            <ImageButton
+                android:layout_width="210dp"
+                android:layout_height="70dp"
+                android:id="@+id/imageButtonStart"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/start_press"
+                android:onClick="onStart" />
+
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewStart"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:text="START"
+                android:textSize="30sp"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="40dp">
+
+        <ImageButton
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:id="@+id/ImageButtonRecords"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/records_press"
+            android:onClick="onRecords" />
+
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewRecords"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:text="RECORDS"
+                android:textSize="30sp"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+        <ImageButton
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:id="@+id/imageButtonExit"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/exit_press"
+            android:onClick="onExit" />
+
+            <azaza.login.Style.TextViewPlus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewExit"
+                foo:customFont="fonts/Skranji-Bold.ttf"
+                android:text="EXIT"
+                android:textSize="30sp"
+                android:textColor="@color/light_font"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

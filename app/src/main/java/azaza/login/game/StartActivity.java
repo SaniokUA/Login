@@ -23,7 +23,7 @@ public class StartActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start);
+        setContentView(R.layout.activity_menu);
         LoadSettings.getInstance(this);
 
         hello = (TextView) findViewById(R.id.hello);

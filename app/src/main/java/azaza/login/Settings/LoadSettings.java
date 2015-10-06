@@ -34,7 +34,7 @@ public class LoadSettings extends Activity {
         // получить доступ к объекту Editor, чтобы изменить общие настройки.
         SharedPreferences.Editor editor = settings.edit();
         // задать новые базовые типы в объекте общих настроек.
-        editor.putString(SettingsConst.PREF_ACCOUNT_NAME, null);
+        editor.putString(SettingsConst.PREF_ACCOUNT_EMAIL, null);
         editor.putInt(SettingsConst.PREF_ACCOUNT_FIRST_START, 1);
         editor.commit();
     }

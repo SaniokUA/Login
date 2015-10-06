@@ -13,8 +13,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import azaza.login.DB;
 import azaza.login.R;
+import azaza.login.database.DB;
 
 /**
  * Created by Шурик on 28.02.2015.

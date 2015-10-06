@@ -1,4 +1,4 @@
-package azaza.login;
+package azaza.login.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -50,7 +50,7 @@ public class DB {
 
     // закрыть подключение
     public void close() {
-        if (mDBHelper!=null) mDBHelper.close();
+        if (mDBHelper != null) mDBHelper.close();
     }
 
     // получить все данные из таблицы DB_TABLE

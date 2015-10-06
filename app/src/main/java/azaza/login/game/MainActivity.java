@@ -6,27 +6,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import android.view.animation.RotateAnimation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-import azaza.login.DB;
 import azaza.login.R;
-
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static java.lang.Thread.sleep;
+import azaza.login.database.DB;
 
 
 public class MainActivity extends StartActivity {
@@ -36,60 +29,70 @@ public class MainActivity extends StartActivity {
     private int i = 0;
     private double k = 0;
     int count = 0;
-    int sum = 0;
-    int bestRes = 0;
-    double step = 0;
-    int[] bestSpeed;
+    public int bestRes = 0;
     TextView TextResult;
-    TextView PressToStart;
+    TextView PressToStart, resultText;
+    LinearLayout startLayout;
+    LinearLayout resultLayout;
     AlertDialog.Builder ad;
     Context context;
     Chronometer chronometer;
     ImageView Arrow;
     ImageView smallArow;
-    final String LOG_TAG = "myLogs";
-
+    int sec = 0;
+    long start = 0;
     DB db;
     public String result;
+    float smallArrowRotateDeg = -38;
+    float duration;
 
-    Timer timer = new Timer();
+
+    private Handler process = new Handler();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_game);
         TextResult = (TextView) findViewById(R.id.textView);
         textView = (TextView) findViewById(R.id.textView);
         PressToStart = (TextView) findViewById(R.id.PressToStart);
-
+        startLayout = (LinearLayout) findViewById(R.id.startLayout);
         button = (ImageButton) findViewById(R.id.button);
-
         Arrow = (ImageView) findViewById(R.id.arrow);
         smallArow = (ImageView) findViewById(R.id.smallarrow);
 
-        button.setOnClickListener(listener);
+        button.setOnClickListener(new OnClickListener() {
 
-        PressToStart.setVisibility(View.INVISIBLE);
+            @Override
+            public void onClick(View v) {
+                ((TextView) findViewById(R.id.textView)).setText("" + ++i);
+                count++;
+                k = k + 3;
+                maineRotate((float) (-170 + k));
+                result = (String) ((TextView) findViewById(R.id.textView)).getText();
+
+            }
+        });
+
         chronometer = (Chronometer) findViewById(R.id.chronometer);
-        chronometer.start();
-        chron();
+        startLayout.setVisibility(View.VISIBLE);
 
-        smalleRotate(-38);
+
+        smalleRotate(smallArrowRotateDeg);
         maineRotate(-170);
-
-        onSeconds();
 
 
     }
 
     //Game Time
     public void chron() {
+        start = SystemClock.elapsedRealtime();
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                long myElapsedMillis = SystemClock.elapsedRealtime()
-                        - chronometer.getBase();
+                long myElapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                sec = (int) (myElapsedMillis / 1000);
                 if (myElapsedMillis < 8000) {
                     chronometer.setTextColor(0xFF00FF00);
                 } else {
@@ -97,9 +100,11 @@ public class MainActivity extends StartActivity {
                 }
 
                 if (myElapsedMillis > 9999) {
+                    process.removeCallbacks(newProcess);
+//                    resultLayout.setVisibility(View.VISIBLE);
                     button.setClickable(false);
                     result = (String) ((TextView) findViewById(R.id.textView)).getText();
-                    resultDialog();
+                    //resultDialog();
                     chronometer.stop();
                 }
             }
@@ -117,8 +122,8 @@ public class MainActivity extends StartActivity {
         Math.round(speed);
         db.addRec("User", newRes, speed);
         db.close();
-    }
 
+    }
 
     //Result dialog
     public void resultDialog() {
@@ -130,7 +135,8 @@ public class MainActivity extends StartActivity {
 
         ad = new AlertDialog.Builder(context);
         ad.setTitle(title);  // заголовок
-        ad.setMessage(message + result + " раз"); // сообщение
+
+        ad.setMessage(message + result + " раз."); // сообщение
         ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 finish();
@@ -151,23 +157,10 @@ public class MainActivity extends StartActivity {
         ad.show();
     }
 
-    //Press button
-    OnClickListener listener = new OnClickListener() {
 
-        @Override
-        public void onClick(View v) {
-            ((TextView) findViewById(R.id.textView)).setText("" + ++i);
-            count++;
-            k = k + 3;
-            maineRotate((float) (-170 + k));
-            step = step + 30;
-            smalleRotate((float) (-38 + step));
-        }
-    };
-
-
+    //Big arrow animation
     private void maineRotate(float degree) {
-        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree + 5,
+        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.94f);
         rotateAnim.setDuration(0);
@@ -175,17 +168,16 @@ public class MainActivity extends StartActivity {
         Arrow.startAnimation(rotateAnim);
     }
 
-    private void smalleRotate(float degree) {
-        final RotateAnimation rotateAnim = new RotateAnimation(degree, degree,
+    //Small arrow animation
+    public void smalleRotate(float deg) {
+
+        final RotateAnimation rotateAnim = new RotateAnimation(smallArrowRotateDeg, deg,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.94f);
-        rotateAnim.setDuration(1000L);
+        rotateAnim.setDuration(500);
         rotateAnim.setFillAfter(true);
+        smallArrowRotateDeg = deg;
         smallArow.startAnimation(rotateAnim);
-    }
-
-    public void onSeconds() {
-        timer.schedule(new Task(), 1000);
     }
 
 
@@ -200,40 +192,29 @@ public class MainActivity extends StartActivity {
     }
 
 
-    private class Task extends TimerTask {
-        @Override
+    //start game Tap and timer
+    public void onStartGame(View view) {
+        startLayout.setVisibility(View.GONE);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
+        chron();
+        //Start after Tap
+        process.postDelayed(newProcess, 0);
+    }
+
+    //Small arrow animation
+    private Runnable newProcess = new Runnable() {
         public void run() {
-            for (int sec = 0; sec <= 10; sec++) {
-                //bestSpeed[sec]=count;
-                sum = sum + count;
-                Log.d(LOG_TAG, String.valueOf(count));
-                count = 0;
-                step = 0;
-                try {
-                    sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (sec == 10) {
-                    Log.d(LOG_TAG, String.valueOf(sum));
-                }
+            duration = count / ((float) (SystemClock.elapsedRealtime() - start) / 1000);
+            if (duration > 1) {
+                smalleRotate((float) (-38 + (duration - 1) * 33));
             }
-
+            bestRes = count > bestRes ? count : bestRes;
+            process.postDelayed(this, 1000 / 60);
         }
-    }
+    };
 
 
-    public int bestSpeed(int array[]) {
-        int lengh = bestSpeed.length;
-        for (int s = 0; s <= lengh; s++) {
-            bestRes = bestSpeed[0];
-            if (bestSpeed[s] > bestRes) {
-                bestRes = bestSpeed[s];
-            }
-        }
-        return bestRes;
-    }
+
 }
-
-
 
