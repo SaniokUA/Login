@@ -4,12 +4,14 @@ package azaza.login.AuthGoogle.Authorization.GoogleData;
 public class UserData {
 
     public static String userID;
-    public static String userName;
+    public static String userName = "";
     public static String firstName;
     public static String lastName;
     public static String email;
-    public static String Sex;
+    public static String Sex = "";
     public static String SocketId;
+    public static String COUNTRY = "";
+    public static String AGE;
 
     public String getUserID() {
         return userID;

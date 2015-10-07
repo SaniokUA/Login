@@ -22,7 +22,7 @@ import azaza.login.R;
 import azaza.login.database.DB;
 
 
-public class MainActivity extends StartActivity {
+public class GameActivity extends MenuActivity {
 
     TextView textView;
     ImageButton button;
@@ -127,7 +127,7 @@ public class MainActivity extends StartActivity {
 
     //Result dialog
     public void resultDialog() {
-        context = MainActivity.this;
+        context = GameActivity.this;
         String title = "Ваш результат";
         String message = "За 10 секунд вы успели нажать: ";
         String button2String = "Сохранить";
@@ -140,7 +140,7 @@ public class MainActivity extends StartActivity {
         ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 finish();
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                Intent intent = new Intent(GameActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,7 +148,7 @@ public class MainActivity extends StartActivity {
             public void onClick(DialogInterface dialog, int arg1) {
                 saveResult();
                 finish();
-                Intent intent = new Intent(MainActivity.this, Records.class);
+                Intent intent = new Intent(GameActivity.this, RecordsActivity.class);
                 startActivity(intent);
 
             }

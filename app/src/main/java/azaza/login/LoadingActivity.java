@@ -21,6 +21,7 @@ import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.Internet.Network;
 import azaza.login.Settings.EditSettings;
 import azaza.login.Settings.LoadSettings;
+import azaza.login.Sockets.SocketManager;
 
 
 public class LoadingActivity extends Activity {
@@ -35,6 +36,8 @@ public class LoadingActivity extends Activity {
     public static final int REQUEST_ACCOUNT_PICKER = 1000;
 
     GoogleAuth googleAuth;
+
+    SocketManager socketManager;
 
 
     /**
@@ -52,14 +55,17 @@ public class LoadingActivity extends Activity {
         layoutRecon = (LinearLayout) findViewById(R.id.layoutRecon);
         layoutLoading = (LinearLayout) findViewById(R.id.layoutLoading);
         reconnectButton = (Button) findViewById(R.id.reconnectButton);
-
         googleAuth = new GoogleAuth(this);
-
         settings = getSharedPreferences("PressButton", Context.MODE_PRIVATE);
         LoadSettings.getInstance(this);
 
         if(new Network().getInstance().isNetworkAvailable(this)) {
             onSing();
+
+            socketManager = new SocketManager(this);
+
+            socketManager.connectSocket();
+
         }
         else{
             layoutLoading.setVisibility(View.GONE);

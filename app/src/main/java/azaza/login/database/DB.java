@@ -17,7 +17,7 @@ public class DB {
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_RECORDS = "records";
+    public static final String COLUMN_RECORDS = "activity_records";
     public static final String COLUMN_SPEED = "speed";
 
 

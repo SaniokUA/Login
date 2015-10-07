@@ -14,7 +14,7 @@ import azaza.login.R;
 import azaza.login.Settings.LoadSettings;
 
 
-public class StartActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity {
 
     AlertDialog.Builder ad;
     Context context;
@@ -38,7 +38,7 @@ public class StartActivity extends ActionBarActivity {
 
     //Dialog window
     public void startDialog() {
-        context = StartActivity.this;
+        context = MenuActivity.this;
         String title = "Начало игры";
         String message = "Установите рекорд по нажатию кнопки за 10 секунд";
         String button1String = "Старт";
@@ -56,7 +56,7 @@ public class StartActivity extends ActionBarActivity {
         ad.setNegativeButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 finish();
-                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class StartActivity extends ActionBarActivity {
     //View all Results
     public void onRecords(View view) {
         finish();
-        Intent intent = new Intent(StartActivity.this, Records.class);
+        Intent intent = new Intent(MenuActivity.this, RecordsActivity.class);
         startActivity(intent);
     }
 

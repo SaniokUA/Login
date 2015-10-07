@@ -32,21 +32,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".game.MainActivity"
+            android:name=".game.GameActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".game.Records"
+            android:name=".game.RecordsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".game.StartActivity"
+            android:name=".game.MenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-
-        <service
-            android:name=".database.mongo.service.ServiceManager"
-            android:exported="false"></service>
     </application>
 
 </manifest>

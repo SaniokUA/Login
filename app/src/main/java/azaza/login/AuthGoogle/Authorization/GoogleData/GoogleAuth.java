@@ -11,7 +11,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import azaza.login.game.StartActivity;
+import azaza.login.game.MenuActivity;
 
 import static com.google.android.gms.plus.Plus.PeopleApi;
 
@@ -105,7 +105,7 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
             userData.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
 
 
-            activity.startActivity(new Intent(activity, StartActivity.class));
+            activity.startActivity(new Intent(activity, MenuActivity.class));
             activity.finish();
 
 
