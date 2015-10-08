@@ -13,7 +13,8 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@drawable/list_item">
+        android:background="@drawable/list_item"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,11 +45,12 @@
                     android:shadowDx="1"
                     android:shadowDy="1"
                     android:shadowRadius="2"
+                    android:paddingBottom="2dp"
                     android:text="1"
                     android:textColor="@color/light_font"
                     android:textSize="14sp"
                     foo:customFont="fonts/Skranji-Bold.ttf"
-                    android:layout_weight="1" />
+                    />
 
             </RelativeLayout>
 

@@ -12,6 +12,9 @@ public class UserData {
     public static String SocketId;
     public static String COUNTRY = "";
     public static String AGE;
+    public static String RESULT = "0";
+    public static String SPEED = "0";
+    public static String BEST_SPEED = "0";
 
     public String getUserID() {
         return userID;
@@ -68,5 +71,43 @@ public class UserData {
     public void setSocketId(String SocketId) {
         this.SocketId = SocketId;
     }
+    public static String getBestSpeed() {
+        return BEST_SPEED;
+    }
 
+    public static void setBestSpeed(String bestSpeed) {
+        BEST_SPEED = bestSpeed;
+    }
+
+    public static String getSPEED() {
+        return SPEED;
+    }
+
+    public static void setSPEED(String SPEED) {
+        UserData.SPEED = SPEED;
+    }
+
+    public static String getRESULT() {
+        return RESULT;
+    }
+
+    public static void setRESULT(String RESULT) {
+        UserData.RESULT = RESULT;
+    }
+
+    public static String getAGE() {
+        return AGE;
+    }
+
+    public static void setAGE(String AGE) {
+        UserData.AGE = AGE;
+    }
+
+    public static String getCOUNTRY() {
+        return COUNTRY;
+    }
+
+    public static void setCOUNTRY(String COUNTRY) {
+        UserData.COUNTRY = COUNTRY;
+    }
 }

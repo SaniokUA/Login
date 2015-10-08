@@ -1,23 +1,26 @@
 package azaza.login.game;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.RotateAnimation;
-import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.R;
 import azaza.login.database.DB;
 
@@ -31,12 +34,11 @@ public class GameActivity extends MenuActivity {
     int count = 0;
     public int bestRes = 0;
     TextView TextResult;
-    TextView PressToStart, resultText;
+    TextView PressToStart, resultText, textView2;
     LinearLayout startLayout;
     LinearLayout resultLayout;
     AlertDialog.Builder ad;
     Context context;
-    Chronometer chronometer;
     ImageView Arrow;
     ImageView smallArow;
     int sec = 0;
@@ -45,6 +47,11 @@ public class GameActivity extends MenuActivity {
     public String result;
     float smallArrowRotateDeg = -38;
     float duration;
+    MyCount counter;
+    Activity activity;
+    int bestSpeed=0;
+    int bestSpeedValue=0;
+    private static final String TAG = "GameLogs";
 
 
     private Handler process = new Handler();
@@ -54,8 +61,10 @@ public class GameActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        activity = this;
         TextResult = (TextView) findViewById(R.id.textView);
         textView = (TextView) findViewById(R.id.textView);
+        textView2 = (TextView) findViewById(R.id.textViewTime);
         PressToStart = (TextView) findViewById(R.id.PressToStart);
         startLayout = (LinearLayout) findViewById(R.id.startLayout);
         button = (ImageButton) findViewById(R.id.button);
@@ -71,11 +80,11 @@ public class GameActivity extends MenuActivity {
                 k = k + 3;
                 maineRotate((float) (-170 + k));
                 result = (String) ((TextView) findViewById(R.id.textView)).getText();
+                bestSpeedValue++;
 
             }
         });
 
-        chronometer = (Chronometer) findViewById(R.id.chronometer);
         startLayout.setVisibility(View.VISIBLE);
 
 
@@ -83,33 +92,12 @@ public class GameActivity extends MenuActivity {
         maineRotate(-170);
 
 
+        //10000 is the starting number (in milliseconds)
+//1000 is the number to count down each time (in milliseconds)
+
+
     }
 
-    //Game Time
-    public void chron() {
-        start = SystemClock.elapsedRealtime();
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long myElapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-                sec = (int) (myElapsedMillis / 1000);
-                if (myElapsedMillis < 8000) {
-                    chronometer.setTextColor(0xFF00FF00);
-                } else {
-                    chronometer.setTextColor(0xffff0000);
-                }
-
-                if (myElapsedMillis > 9999) {
-                    process.removeCallbacks(newProcess);
-//                    resultLayout.setVisibility(View.VISIBLE);
-                    button.setClickable(false);
-                    result = (String) ((TextView) findViewById(R.id.textView)).getText();
-                    //resultDialog();
-                    chronometer.stop();
-                }
-            }
-        });
-    }
 
     public void saveResult() {
 
@@ -195,9 +183,10 @@ public class GameActivity extends MenuActivity {
     //start game Tap and timer
     public void onStartGame(View view) {
         startLayout.setVisibility(View.GONE);
-        chronometer.setBase(SystemClock.elapsedRealtime());
-        chronometer.start();
-        chron();
+
+        counter = new MyCount(11000, 1000);
+        counter.start();
+
         //Start after Tap
         process.postDelayed(newProcess, 0);
     }
@@ -211,10 +200,60 @@ public class GameActivity extends MenuActivity {
             }
             bestRes = count > bestRes ? count : bestRes;
             process.postDelayed(this, 1000 / 60);
+
         }
     };
 
 
+    //countdowntimer is an abstract class, so extend it and fill in methods
+    public class MyCount extends CountDownTimer
+    {
+        long myElapsedMillis;
 
+        public MyCount(long millisInFuture, long countDownInterval)
+        {
+            super(millisInFuture, countDownInterval);
+            start = SystemClock.elapsedRealtime();
+
+        }
+
+        public void onFinish()
+        {
+            process.removeCallbacks(newProcess);
+            textView2.setText("0");
+            button.setClickable(false);
+            UserData.setRESULT(String.valueOf(bestRes));
+            UserData.setBestSpeed(String.valueOf(bestSpeed));
+            double speed = bestRes/10;
+            Log.d(TAG,"BestSpeed = " + String.valueOf(speed));
+
+            UserData.setSPEED(String.valueOf((speed)));
+            activity.startActivity(new Intent(activity, SaveActivity.class));
+        }
+
+        public void onTick(long millisUntilFinished)
+        {
+            myElapsedMillis = SystemClock.elapsedRealtime() - millisUntilFinished;
+            sec = (int) (myElapsedMillis / 1000);
+            if ((millisUntilFinished) < 3000) {
+                textView2.setTextColor(0xffff0000);
+            } else {
+                textView2.setTextColor(0xFF00FF00);
+            }
+
+            if(bestSpeedValue>bestSpeed){
+                bestSpeed = bestSpeedValue;
+            }
+            bestSpeedValue = 0;
+
+            textView2.setText("" + millisUntilFinished/1000);
+
+        }
+
+    }
 }
+
+
+
+
 

@@ -1,5 +1,6 @@
 package azaza.login.game;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,24 +20,30 @@ import azaza.login.R;
  */
 public class RecordsActivity extends GameActivity {
 
-    ListView recordsList;
-    List<ListItemRecords> data;
+    ListView recordsWorldList, recordsPersonalList ;
     ListItemAdapter adapter;
+    Activity activity;
+
+    static List<ListItemRecords> listWorldRecords = new ArrayList<ListItemRecords>();
+    static List<ListItemRecords> listPersonalRecords = new ArrayList<ListItemRecords>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
+
+        activity = this;
         tabInit();
 
-        recordsList = (ListView) findViewById(R.id.listViewWorld);
-        List<ListItemRecords> list = new ArrayList<ListItemRecords>();
+        recordsWorldList = (ListView) findViewById(R.id.listViewWorld);
+        recordsPersonalList = (ListView) findViewById(R.id.listViewPersonal);
 
-        for(int i=0; i<10; i++) {
-            list.add(get("1", " Alex Sasha", "100", "ua"));
-        }
-        adapter = new ListItemAdapter(this, list);
-        recordsList.setAdapter(adapter);
+
+        getWorldRecords();
+        getPersonalRecords();
+
     }
 
     public ListItemRecords get(String position, String userName, String result, String country) {
@@ -82,10 +89,30 @@ public class RecordsActivity extends GameActivity {
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             public void onTabChanged(String tabId) {
+                if(tabId.equals("World")){
+
+                }else{
+
+                }
 
             }
         });
     }
 
+    public void getWorldRecords(){
+        for(int i=1; i<=10; i++) {
+            listWorldRecords.add(get("" + i, " Alex Sasha", "100", "ua"));
+        }
+        adapter = new ListItemAdapter(activity, listWorldRecords);
+        recordsWorldList.setAdapter(adapter);
+    }
+
+    public void getPersonalRecords() {
+        for(int i=1; i<=10; i++) {
+            listPersonalRecords.add(get("" + i, " Alex Sasha", "100", "ua"));
+        }
+        adapter = new ListItemAdapter(activity, listPersonalRecords);
+        recordsPersonalList.setAdapter(adapter);
+    }
 
 }
