@@ -18,7 +18,7 @@ public class MenuActivity extends ActionBarActivity {
 
     AlertDialog.Builder ad;
     Context context;
-    TextView hello;
+    TextView hello, rank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,9 @@ public class MenuActivity extends ActionBarActivity {
         LoadSettings.getInstance(this);
 
         hello = (TextView) findViewById(R.id.hello);
+        rank = (TextView) findViewById(R.id.textViewWorldRankValue);
+        rank.setText(UserData.USER_RANK);
+
         getName();
 
     }

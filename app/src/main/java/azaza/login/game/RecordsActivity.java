@@ -8,24 +8,20 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import azaza.login.Adapter.ListItemAdapter;
-import azaza.login.Model.ListItemRecords;
 import azaza.login.R;
+import azaza.login.Sockets.SocketManager;
 
 /**
  * Created by Шурик on 28.02.2015.
  */
 public class RecordsActivity extends GameActivity {
 
-    ListView recordsWorldList, recordsPersonalList ;
+    ListView recordsWorldList, recordsPersonalList;
     ListItemAdapter adapter;
     Activity activity;
 
-    static List<ListItemRecords> listWorldRecords = new ArrayList<ListItemRecords>();
-    static List<ListItemRecords> listPersonalRecords = new ArrayList<ListItemRecords>();
+    SocketManager socketManager;
 
 
 
@@ -34,21 +30,16 @@ public class RecordsActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
 
+        socketManager = SocketManager.getInstance();
+        socketManager.getTopResults(this);
+        socketManager.getPersResults(this);
+
         activity = this;
         tabInit();
 
-        recordsWorldList = (ListView) findViewById(R.id.listViewWorld);
-        recordsPersonalList = (ListView) findViewById(R.id.listViewPersonal);
-
-
-        getWorldRecords();
-        getPersonalRecords();
-
     }
 
-    public ListItemRecords get(String position, String userName, String result, String country) {
-        return new ListItemRecords(position, userName, result, country);
-    }
+
 
     public void onMenu(View view) {
         finish();
@@ -56,7 +47,7 @@ public class RecordsActivity extends GameActivity {
         startActivity(intent);
     }
 
-    public void tabInit(){
+    public void tabInit() {
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
 
@@ -80,8 +71,7 @@ public class RecordsActivity extends GameActivity {
 
         tabHost.setCurrentTabByTag("World");
 
-        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-        {
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.tab_selector_left);
             tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.tab_selector_right);
 
@@ -89,9 +79,9 @@ public class RecordsActivity extends GameActivity {
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             public void onTabChanged(String tabId) {
-                if(tabId.equals("World")){
+                if (tabId.equals("World")) {
 
-                }else{
+                } else {
 
                 }
 
@@ -99,20 +89,5 @@ public class RecordsActivity extends GameActivity {
         });
     }
 
-    public void getWorldRecords(){
-        for(int i=1; i<=10; i++) {
-            listWorldRecords.add(get("" + i, " Alex Sasha", "100", "ua"));
-        }
-        adapter = new ListItemAdapter(activity, listWorldRecords);
-        recordsWorldList.setAdapter(adapter);
-    }
-
-    public void getPersonalRecords() {
-        for(int i=1; i<=10; i++) {
-            listPersonalRecords.add(get("" + i, " Alex Sasha", "100", "ua"));
-        }
-        adapter = new ListItemAdapter(activity, listPersonalRecords);
-        recordsPersonalList.setAdapter(adapter);
-    }
 
 }

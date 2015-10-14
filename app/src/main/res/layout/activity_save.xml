@@ -157,7 +157,7 @@
                 <azaza.login.Style.TextViewPlus
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Best Speed:"
+                    android:text="Best speed"
                     android:id="@+id/textViewBestSpeed"
                     android:textSize="25sp"
                     foo:customFont="fonts/Skranji-Bold.ttf"

@@ -21,7 +21,6 @@ import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.Internet.Network;
 import azaza.login.Settings.EditSettings;
 import azaza.login.Settings.LoadSettings;
-import azaza.login.Sockets.SocketManager;
 
 
 public class LoadingActivity extends Activity {
@@ -37,7 +36,6 @@ public class LoadingActivity extends Activity {
 
     GoogleAuth googleAuth;
 
-    SocketManager socketManager;
 
 
     /**
@@ -46,9 +44,8 @@ public class LoadingActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Splash screen view
-
         setContentView(R.layout.activity_loading);
+
         loading = (ProgressBar) findViewById(R.id.loadingBar);
         loadText = (TextView) findViewById(R.id.loadingText);
         tokText = (TextView) findViewById(R.id.token);
@@ -61,11 +58,6 @@ public class LoadingActivity extends Activity {
 
         if(new Network().getInstance().isNetworkAvailable(this)) {
             onSing();
-
-            socketManager = new SocketManager(this);
-
-            socketManager.connectSocket();
-
         }
         else{
             layoutLoading.setVisibility(View.GONE);
@@ -84,7 +76,6 @@ public class LoadingActivity extends Activity {
         }else{
 
             googleAuth.signInWithGplus(UserData.email);
-
         }
     }
 

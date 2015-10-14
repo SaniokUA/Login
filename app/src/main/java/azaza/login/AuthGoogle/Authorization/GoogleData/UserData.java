@@ -1,13 +1,18 @@
 package azaza.login.AuthGoogle.Authorization.GoogleData;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import azaza.login.Model.ListItemRecords;
+
 public class UserData {
 
-    public static String userID;
+    public static String userID = null;
     public static String userName = "";
     public static String firstName;
     public static String lastName;
-    public static String email;
+    public static String email =null;
     public static String Sex = "";
     public static String SocketId;
     public static String COUNTRY = "";
@@ -15,6 +20,10 @@ public class UserData {
     public static String RESULT = "0";
     public static String SPEED = "0";
     public static String BEST_SPEED = "0";
+    public static String USER_RANK = "None";
+    public static List<ListItemRecords> listWorldRecords =  new ArrayList<>();
+    public static List<ListItemRecords> listPersonalRecords = new ArrayList<>();
+
 
     public String getUserID() {
         return userID;
@@ -28,32 +37,32 @@ public class UserData {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public static void setUserName(String userName) {
+        UserData.userName = userName;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public static void setFirstName(String firstName) {
+        UserData.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public static void setLastName(String lastName) {
+        UserData.lastName = lastName;
     }
 
-    public String getEmail() {
+    public static String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public static void setEmail(String email) {
+        UserData.email = email;
     }
 
     public String getSex() {
@@ -110,4 +119,17 @@ public class UserData {
     public static void setCOUNTRY(String COUNTRY) {
         UserData.COUNTRY = COUNTRY;
     }
+
+    public static void setSex(String sex) {
+        Sex = sex;
+    }
+
+    public static String getUserRank() {
+        return USER_RANK;
+    }
+
+    public static void setUserRank(String userRank) {
+        USER_RANK = userRank;
+    }
+
 }

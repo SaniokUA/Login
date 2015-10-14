@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.R;
+import azaza.login.Sockets.SocketManager;
 
 /**
  * Created by Alex on 08.10.2015.
@@ -17,6 +18,7 @@ public class SaveActivity extends Activity{
 
     TextView result, name, speed, bestSpeed;
     ImageButton save, close;
+    SocketManager socketManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class SaveActivity extends Activity{
         name.setText(UserData.userName);
     }
 
+
     public void onClose(View view){
         finish();
         Intent intent = new Intent(this, MenuActivity.class);
@@ -47,6 +50,10 @@ public class SaveActivity extends Activity{
     }
 
     public void onSave(View view){
+
+        socketManager = SocketManager.getInstance();
+        socketManager.savePersonalResults();
+
         finish();
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);

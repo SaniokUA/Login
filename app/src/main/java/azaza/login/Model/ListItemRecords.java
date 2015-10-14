@@ -49,5 +49,5 @@ public class ListItemRecords {
     public void setResult(String result) {
         this.result = result;
     }
-
 }
+

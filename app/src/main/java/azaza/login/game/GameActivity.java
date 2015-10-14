@@ -219,15 +219,16 @@ public class GameActivity extends MenuActivity {
 
         public void onFinish()
         {
+            button.setClickable(false);
             process.removeCallbacks(newProcess);
             textView2.setText("0");
-            button.setClickable(false);
             UserData.setRESULT(String.valueOf(bestRes));
             UserData.setBestSpeed(String.valueOf(bestSpeed));
             double speed = bestRes/10;
             Log.d(TAG,"BestSpeed = " + String.valueOf(speed));
-
             UserData.setSPEED(String.valueOf((speed)));
+
+            finish();
             activity.startActivity(new Intent(activity, SaveActivity.class));
         }
 

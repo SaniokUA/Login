@@ -1,7 +1,6 @@
 package azaza.login.AuthGoogle.Authorization.GoogleData;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 
@@ -11,7 +10,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import azaza.login.game.MenuActivity;
+import azaza.login.Sockets.SocketManager;
 
 import static com.google.android.gms.plus.Plus.PeopleApi;
 
@@ -20,12 +19,12 @@ import static com.google.android.gms.plus.Plus.PeopleApi;
  */
 public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    Activity activity;
-
+    static Activity activity;
+    SocketManager socketManager;
 
     public GoogleAuth(Activity activity) {
-        this.activity = activity;
-
+        GoogleAuth.activity = activity;
+        socketManager = SocketManager.getInstance();
     }
 
     private static final int RC_SIGN_IN = 100;
@@ -99,15 +98,13 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
     public void getProfileInformation() {
         try {
             Person currentPerson = PeopleApi.getCurrentPerson(mGoogleApiClient);
-            userData.setFirstName(currentPerson.getName().getGivenName());
-            userData.setLastName(currentPerson.getName().getFamilyName());
-            userData.setUserName(currentPerson.getDisplayName());
-            userData.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
-
-
-            activity.startActivity(new Intent(activity, MenuActivity.class));
-            activity.finish();
-
+            UserData.setFirstName(currentPerson.getName().getGivenName());
+            UserData.setLastName(currentPerson.getName().getFamilyName());
+            UserData.setUserName(currentPerson.getDisplayName());
+            UserData.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
+            UserData.setCOUNTRY(currentPerson.getPlacesLived().get(0).getValue());
+            UserData.setSex(String.valueOf(currentPerson.getGender()));
+            socketManager.authorization(activity);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,6 +137,9 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
             //   mGoogleApiClient.disconnect();
         }
     }
+
+
+
 }
 
 
