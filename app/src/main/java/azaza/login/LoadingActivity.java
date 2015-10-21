@@ -21,6 +21,7 @@ import azaza.login.AuthGoogle.Authorization.GoogleData.UserData;
 import azaza.login.Internet.Network;
 import azaza.login.Settings.EditSettings;
 import azaza.login.Settings.LoadSettings;
+import azaza.login.Temp.TempLocal;
 
 
 public class LoadingActivity extends Activity {
@@ -36,8 +37,6 @@ public class LoadingActivity extends Activity {
 
     GoogleAuth googleAuth;
 
-
-
     /**
      * Called when the activity is first created.
      */
@@ -52,7 +51,8 @@ public class LoadingActivity extends Activity {
         layoutRecon = (LinearLayout) findViewById(R.id.layoutRecon);
         layoutLoading = (LinearLayout) findViewById(R.id.layoutLoading);
         reconnectButton = (Button) findViewById(R.id.reconnectButton);
-        googleAuth = new GoogleAuth(this);
+        TempLocal.setLoadingActivity(this);
+        googleAuth = new GoogleAuth();
         settings = getSharedPreferences("PressButton", Context.MODE_PRIVATE);
         LoadSettings.getInstance(this);
 
@@ -87,16 +87,17 @@ public class LoadingActivity extends Activity {
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        if (requestCode == REQUEST_ACCOUNT_PICKER && resultCode == RESULT_OK) {
+        if ((requestCode == REQUEST_ACCOUNT_PICKER && resultCode == RESULT_OK) || UserData.email != null) {
             String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
             EditSettings.saveUserName(settings, accountName);
 
             if (accountName != null) {
+                UserData.email = accountName;
                 googleAuth.signInWithGplus(accountName);
             }
 
         } else {
-
+            showGoogleAccountPicker();
         }
     }
 

@@ -252,6 +252,16 @@ public class GameActivity extends MenuActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+        this.finish();
+        super.onBackPressed();  // optional depending on your needs
+    }
+
 }
 
 

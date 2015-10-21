@@ -8,15 +8,16 @@ import azaza.login.Model.ListItemRecords;
 
 public class UserData {
 
+    public static int FIRST_START = 0;
     public static String userID = null;
     public static String userName = "";
-    public static String firstName;
-    public static String lastName;
+    public static String firstName="";
+    public static String lastName="";
     public static String email =null;
     public static String Sex = "";
     public static String SocketId;
     public static String COUNTRY = "";
-    public static String AGE;
+    public static String AGE="";
     public static String RESULT = "0";
     public static String SPEED = "0";
     public static String BEST_SPEED = "0";

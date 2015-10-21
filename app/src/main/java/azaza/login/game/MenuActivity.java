@@ -20,11 +20,13 @@ public class MenuActivity extends ActionBarActivity {
     Context context;
     TextView hello, rank;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         LoadSettings.getInstance(this);
+
 
         hello = (TextView) findViewById(R.id.hello);
         rank = (TextView) findViewById(R.id.textViewWorldRankValue);
@@ -36,11 +38,18 @@ public class MenuActivity extends ActionBarActivity {
 
     //Button Start
     public void onStart(View view) {
-        startDialog();
+        if(UserData.FIRST_START == 0) {
+            startDialog();
+        }else{
+            finish();
+            Intent intent = new Intent(MenuActivity.this, GameActivity.class);
+            startActivity(intent);
+        }
     }
 
     //Dialog window
     public void startDialog() {
+        UserData.FIRST_START = 1;
         context = MenuActivity.this;
         String title = "Начало игры";
         String message = "Установите рекорд по нажатию кнопки за 10 секунд";
@@ -84,6 +93,13 @@ public class MenuActivity extends ActionBarActivity {
         hello.setText(UserData.firstName);
     }
 
+
+    @Override
+    public void onBackPressed()
+    {
+        this.finish();
+        super.onBackPressed();  // optional depending on your needs
+    }
 
 }
 

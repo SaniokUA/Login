@@ -11,6 +11,7 @@ import android.widget.TextView;
 import azaza.login.Adapter.ListItemAdapter;
 import azaza.login.R;
 import azaza.login.Sockets.SocketManager;
+import azaza.login.Temp.TempLocal;
 
 /**
  * Created by Шурик on 28.02.2015.
@@ -30,9 +31,11 @@ public class RecordsActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
 
+        TempLocal.setRecordsActivity(this);
+
         socketManager = SocketManager.getInstance();
-        socketManager.getTopResults(this);
-        socketManager.getPersResults(this);
+        socketManager.getTopResults();
+        socketManager.getPersResults();
 
         activity = this;
         tabInit();

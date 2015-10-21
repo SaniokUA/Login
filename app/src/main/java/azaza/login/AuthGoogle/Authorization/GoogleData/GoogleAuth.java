@@ -6,24 +6,29 @@ import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
 import azaza.login.Sockets.SocketManager;
+import azaza.login.Temp.TempLocal;
 
 import static com.google.android.gms.plus.Plus.PeopleApi;
 
 /**
  * Created by Alex on 17.07.2015.
  */
-public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<People.LoadPeopleResult> {
 
     static Activity activity;
     SocketManager socketManager;
 
-    public GoogleAuth(Activity activity) {
-        GoogleAuth.activity = activity;
+    public GoogleAuth() {
+        GoogleAuth.activity = TempLocal.getLoadingActivity();
         socketManager = SocketManager.getInstance();
     }
 
@@ -32,22 +37,18 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
 
-    UserData userData = new UserData();
-
-
     public void getUserAccounts(String googleAcc) {
         if (googleAcc != null) {
             mGoogleApiClient = new GoogleApiClient.Builder(activity)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(Plus.API)
-                    .addScope(Plus.SCOPE_PLUS_LOGIN)
+                    .addScope(new Scope(Scopes.PROFILE))
                     .setAccountName(googleAcc)
                     .build();
             mGoogleApiClient.connect();
         }
     }
-
 
     private void resolveSignInError() {
         if (mConnectionResult.hasResolution()) {
@@ -57,16 +58,10 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
             } catch (IntentSender.SendIntentException e) {
                 mIntentInProgress = false;
                 mGoogleApiClient.connect();
-
             }
         }
     }
 
-
-    /**
-     * Error connectionFailed
-     * Only to more 2 Accounts Google
-     */
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         if (!result.hasResolution()) {
@@ -80,15 +75,12 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
         }
     }
 
-    /**
-     * If user connected to Google
-     * Get user info
-     */
     @Override
-    public void onConnected(Bundle arg0) {
+    public void onConnected(Bundle connectionHint) {
+
+        PeopleApi.loadVisible(mGoogleApiClient, null).setResultCallback(this);
 
         getProfileInformation();
-
     }
 
 
@@ -97,16 +89,36 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
      */
     public void getProfileInformation() {
         try {
-            Person currentPerson = PeopleApi.getCurrentPerson(mGoogleApiClient);
-            UserData.setFirstName(currentPerson.getName().getGivenName());
-            UserData.setLastName(currentPerson.getName().getFamilyName());
-            UserData.setUserName(currentPerson.getDisplayName());
-            UserData.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
-            UserData.setCOUNTRY(currentPerson.getPlacesLived().get(0).getValue());
-            UserData.setSex(String.valueOf(currentPerson.getGender()));
-            socketManager.authorization(activity);
+            if(PeopleApi.getCurrentPerson(mGoogleApiClient)!=null) {
+                Person currentPerson = PeopleApi.getCurrentPerson(mGoogleApiClient);
 
+                if (currentPerson.hasDisplayName()) {
+
+                    if (currentPerson.getName().hasGivenName()) {
+                        UserData.setFirstName(currentPerson.getName().getGivenName());
+                    }
+                    if (currentPerson.getName().hasFamilyName()) {
+                        UserData.setLastName(currentPerson.getName().getFamilyName());
+                    }
+
+                    if (currentPerson.hasDisplayName()) {
+                        UserData.setUserName(currentPerson.getDisplayName());
+                    }
+
+                }
+                if (currentPerson.hasPlacesLived()) {
+                    UserData.setCOUNTRY(currentPerson.getPlacesLived().get(0).getValue());
+                }
+                if (currentPerson.hasGender()) {
+                    UserData.setSex(String.valueOf(currentPerson.getGender()));
+                }
+                UserData.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                socketManager.authorization();
+            }
+            else{
+            }
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
@@ -116,20 +128,10 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
         mGoogleApiClient.connect();
     }
 
-    /**
-     * Sign-in into google
-     */
-
-
     public void signInWithGplus(String accGoogle) {
-
         getUserAccounts(accGoogle);
-
     }
 
-    /**
-     * Sign-out from google
-     */
     public void signOutFromGplus() {
         if (mGoogleApiClient == null) {
         } else {
@@ -139,7 +141,10 @@ public class GoogleAuth extends Activity implements GoogleApiClient.ConnectionCa
     }
 
 
+    @Override
+    public void onResult(People.LoadPeopleResult loadPeopleResult) {
 
+    }
 }
 
 
