@@ -214,12 +214,18 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <ImageButton
+                <com.facebook.share.widget.ShareButton
                     android:layout_width="200dp"
                     android:layout_height="50dp"
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/imageButtonFB"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/facebook_btn" />
+                    />
+
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageButtonTW"
+                    android:layout_gravity="center_horizontal"/>
             </LinearLayout>
 
         </LinearLayout>

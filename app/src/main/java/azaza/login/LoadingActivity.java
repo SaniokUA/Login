@@ -26,6 +26,9 @@ import azaza.login.Temp.TempLocal;
 
 public class LoadingActivity extends Activity {
 
+
+
+
     ProgressBar loading;
     TextView loadText;
     TextView tokText;
@@ -43,6 +46,7 @@ public class LoadingActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_loading);
 
         loading = (ProgressBar) findViewById(R.id.loadingBar);

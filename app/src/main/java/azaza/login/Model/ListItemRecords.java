@@ -7,14 +7,16 @@ public class ListItemRecords {
 
     String position;
     String userName;
-    String country;
+    String speed;
     String result;
+    String country;
 
-    public ListItemRecords(String position, String userName, String result, String country) {
+    public ListItemRecords(String position, String userName, String result, String speed, String country) {
 
         this.position = position;
         this.userName = userName;
         this.result = result;
+        this.speed = speed;
         this.country = country;
     }
 
@@ -34,12 +36,12 @@ public class ListItemRecords {
         this.userName = userName;
     }
 
-    public String getCountry() {
-        return country;
+    public String getSpeed() {
+        return speed;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setSpeed(String speed) {
+        this.speed = speed;
     }
 
     public String getResult() {
@@ -48,6 +50,14 @@ public class ListItemRecords {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
 

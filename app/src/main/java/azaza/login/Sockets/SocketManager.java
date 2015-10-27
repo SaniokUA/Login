@@ -216,7 +216,7 @@ public class SocketManager {
                             for (int i = 0; i < recordsData.length(); i++) {
                                 results = recordsData.getJSONObject(i).getJSONObject("result");
                                 player = recordsData.getJSONObject(i).getJSONObject("user");
-                                UserData.listWorldRecords.add(get(("" + (1 + i)), player.getString("name"), results.getString("score"), player.getString("country")));
+                                UserData.listWorldRecords.add(get(("" + (1 + i)), player.getString("name"), results.getString("score"), "none", player.getString("country")));
                                 TempLocal.getRecordsActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -231,8 +231,8 @@ public class SocketManager {
                         }
                     }
 
-                    private ListItemRecords get(String position, String name, String score, String country) {
-                        return new ListItemRecords(position, name, score, country);
+                    private ListItemRecords get(String position, String name, String score, String speed, String country) {
+                        return new ListItemRecords(position, name, score, speed, country);
                     }
 
                 });
@@ -273,7 +273,7 @@ public class SocketManager {
 
                             for (int i = 0; i < recordsData.length(); i++) {
                                 results = recordsData.getJSONObject(i);
-                                UserData.listPersonalRecords.add(get((""), UserData.userName, results.getString("score"), UserData.COUNTRY));
+                                UserData.listPersonalRecords.add(get((""), UserData.userName, results.getString("score"), results.getString("speed_per_sec"), UserData.getCOUNTRY()));
                                 TempLocal.getRecordsActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -288,8 +288,8 @@ public class SocketManager {
                         }
                     }
 
-                    private ListItemRecords get(String position, String name, String score, String country) {
-                        return new ListItemRecords(position, name, score, country);
+                    private ListItemRecords get(String position, String name, String score, String speed, String country) {
+                        return new ListItemRecords(position, name, score, speed, country);
                     }
 
                 });

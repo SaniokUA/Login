@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import azaza.login.Adapter.ListItemAdapter;
 import azaza.login.R;
 import azaza.login.Sockets.SocketManager;
 import azaza.login.Temp.TempLocal;
@@ -17,26 +15,17 @@ import azaza.login.Temp.TempLocal;
  * Created by Шурик on 28.02.2015.
  */
 public class RecordsActivity extends GameActivity {
-
-    ListView recordsWorldList, recordsPersonalList;
-    ListItemAdapter adapter;
     Activity activity;
-
     SocketManager socketManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
-
         TempLocal.setRecordsActivity(this);
-
         socketManager = SocketManager.getInstance();
         socketManager.getTopResults();
         socketManager.getPersResults();
-
         activity = this;
         tabInit();
 

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
+                    android:id="@+id/imageViewPoint"
                     android:src="@drawable/rank_point_image" />
 
                 <azaza.login.Style.TextViewPlus
@@ -71,7 +70,7 @@
                 android:layout_weight="1" />
 
             <azaza.login.Style.TextViewPlus
-                android:id="@+id/textViewListScore"
+                android:id="@+id/textViewListScoreValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -90,7 +89,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewCountry"
                 android:src="@drawable/ua_flag"
                 android:layout_gravity="center_vertical|right"
                 />
@@ -100,4 +99,3 @@
 
 
 </LinearLayout>
-

@@ -90,12 +90,6 @@ public class GameActivity extends MenuActivity {
 
         smalleRotate(smallArrowRotateDeg);
         maineRotate(-170);
-
-
-        //10000 is the starting number (in milliseconds)
-//1000 is the number to count down each time (in milliseconds)
-
-
     }
 
 
